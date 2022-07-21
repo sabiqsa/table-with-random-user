@@ -5,7 +5,7 @@ const renderSearch = (value) => render(<Search value={value} />);
 
 describe('User can see Search bar at Screen', () => {
   test('user can type search', () => {
-    renderSearch('Mathilda');
-    expect(screen.getByPlaceholderText('Search')).toHaveValue('Mathilda');
+    renderSearch('Mat');
+    expect(screen.getByPlaceholderText('Search')).toHaveValue('Mat');
   });
 });

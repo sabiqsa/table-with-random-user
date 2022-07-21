@@ -1,12 +1,13 @@
-# Simple Song List
+# Simple Table
 
-Simple Song List.
+Simple Table.
 ```bash
 Feature
-* This App can show list song.
-* This App can show artist list.
-* This App can search by artist.
-* This App can search by song title.
+* This App can show list table.
+* This App can search using enter keyword.
+* This App can search and filter by gender.
+* This App can sort table by header table.
+* This App can change pagination.
 
 Requirement
 * This app start with boiler plate
@@ -15,6 +16,7 @@ https://github.com/Rohithgilla12/react-router-material-boilerplate/.
 * State management using redux saga.
 * Fetch using axios.
 * React testing library.
+* data from random user api
 ```
 
 # How to start
@@ -29,13 +31,16 @@ open http://localhost:3000/ on your browser.
 # Program running
 
 ### halaman utama
-![tampilanutama](/images/first-screen.png.png)
+![tampilanutama](/images/first-ui.png)
 
-### search by track list
-![filterbytrack](/images/filter-by-track.png)
+### search by name
+![filterbyname](/images/search_by.png)
 
-### search by artist list
-![filterbytrack](/images/filter-by-artist.png)
+### search by name and gender
+![searchbygender](/images/search_and_gender.png)
+
+### sorting by username
+![sorting](/images/sorting_by_username.png)
 
 # Testing using jest
 
@@ -43,5 +48,3 @@ open http://localhost:3000/ on your browser.
 npm install jest
 npm run test
 ```
-
-![test](unit-test-produk.png)

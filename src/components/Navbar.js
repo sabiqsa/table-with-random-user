@@ -5,6 +5,8 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 import AdbIcon from '@material-ui/icons/Adb';
 
+const TITLE_NAVBAR = 'Table User List - Sabi';
+
 const Navbar = () => {
   const classes = useStyles();
   return (
@@ -19,7 +21,7 @@ const Navbar = () => {
             href="/"
             className={classes.navbarContainer}
           >
-            Simple Song by Sabi
+            {TITLE_NAVBAR}
           </Typography>
         </Toolbar>
       </AppBar>

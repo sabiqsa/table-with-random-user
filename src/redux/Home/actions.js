@@ -1,64 +1,33 @@
 import {
-  GET_TRACK_LIST_PROCESS,
-  GET_TRACK_LIST_RESULT,
-  GET_ARTIST_LIST_PROCESS,
-  GET_ARTIST_LIST_RESULT,
-  GET_SEARCH_TRACK_LIST_PROCESS,
-  GET_SEARCH_TRACK_LIST_RESULT,
-  GET_SEARCH_ARTIST_LIST_PROCESS,
-  GET_SEARCH_ARTIST_LIST_RESULT,
+  GET_USER_LIST_PROCESS,
+  GET_USER_LIST_RESULT,
+  GET_FILTER_PROCESS,
+  GET_FILTER_RESULT,
 } from '../constants.js';
 
-export function getTrackListProcess() {
+export function getUserListProcess() {
   return {
-    type: GET_TRACK_LIST_PROCESS,
+    type: GET_USER_LIST_PROCESS,
   };
 }
 
-export function getTrackListResult(response) {
+export function getUserListResult(response) {
   return {
-    type: GET_TRACK_LIST_RESULT,
+    type: GET_USER_LIST_RESULT,
     response,
   };
 }
 
-export function getArtistListProcess() {
+export function getFilterProcess(params) {
   return {
-    type: GET_ARTIST_LIST_PROCESS,
-  };
-}
-
-export function getArtistListResult(response) {
-  return {
-    type: GET_ARTIST_LIST_RESULT,
-    response,
-  };
-}
-
-export function getSearchTrackListProcess(params) {
-  return {
-    type: GET_SEARCH_TRACK_LIST_PROCESS,
+    type: GET_FILTER_PROCESS,
     params,
   };
 }
 
-export function getSearchTrackListResult(response) {
+export function getFilterResult(response) {
   return {
-    type: GET_SEARCH_TRACK_LIST_RESULT,
-    response,
-  };
-}
-
-export function getSearchArtistListProcess(params) {
-  return {
-    type: GET_SEARCH_ARTIST_LIST_PROCESS,
-    params,
-  };
-}
-
-export function getSearchArtistListResult(response) {
-  return {
-    type: GET_SEARCH_ARTIST_LIST_RESULT,
+    type: GET_FILTER_RESULT,
     response,
   };
 }

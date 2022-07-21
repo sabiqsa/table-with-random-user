@@ -3,27 +3,10 @@ import { initialState } from './reducer';
 
 const selectHomeReducer = (state) => state.homeReducers || initialState;
 
-const makeSelectTrackList = () =>
-  createSelector(selectHomeReducer, (homeState) => homeState.dataTrackList);
+const makeSelectUserList = () =>
+  createSelector(selectHomeReducer, (homeState) => homeState.dataUserList);
 
-const makeSelectArtistList = () =>
-  createSelector(selectHomeReducer, (homeState) => homeState.dataArtistList);
+const makeSelectFilterList = () =>
+  createSelector(selectHomeReducer, (homeState) => homeState.dataFilter);
 
-const makeSelectSearchTrackList = () =>
-  createSelector(
-    selectHomeReducer,
-    (homeState) => homeState.dataSearchTrackList,
-  );
-
-const makeSelectSearchArtistList = () =>
-  createSelector(
-    selectHomeReducer,
-    (homeState) => homeState.dataSearchArtistList,
-  );
-
-export {
-  makeSelectTrackList,
-  makeSelectArtistList,
-  makeSelectSearchTrackList,
-  makeSelectSearchArtistList,
-};
+export { makeSelectUserList, makeSelectFilterList };

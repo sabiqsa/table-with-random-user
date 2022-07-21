@@ -25,6 +25,11 @@
   color: #61dafb;
 }
 
+.Home {
+  width: 100%;
+  padding: 32px;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

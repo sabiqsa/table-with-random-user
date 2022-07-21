@@ -18,9 +18,7 @@ describe('User can see Navbar at Screen', () => {
   });
   test('user can see title', () => {
     renderHome();
-    screen.debug(null, 99999999);
-
-    expect(screen.getByText('Simple Song by Sabi')).toBeInTheDocument();
+    expect(screen.getByText('Table User List - Sabi')).toBeInTheDocument();
   });
 });
 

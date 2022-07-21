@@ -1,42 +1,22 @@
 import axios from 'axios';
-const apiKey = process.env.REACT_APP_API_KEY;
 
-const API_GET_TRACK_LIST = `https://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&api_key=${apiKey}&format=json`;
-const API_GET_ARTIST_LIST = `https://ws.audioscrobbler.com/2.0/?method=chart.gettopartists&api_key=${apiKey}&format=json`;
-const getSearchTrackApi = (params) =>
-  `https://ws.audioscrobbler.com/2.0/?method=track.search&track=${params}&api_key=${apiKey}&format=json`;
-const getSearchArtistApi = (params) =>
-  `https://ws.audioscrobbler.com/2.0/?method=artist.search&artist=${params}&api_key=${apiKey}&format=json`;
+const API_GET_USERS = `https://randomuser.me/api/?results=500`;
 
-export const getTrackListData = async () => {
+export const getUserListData = async () => {
   try {
-    const url = API_GET_TRACK_LIST;
+    const url = API_GET_USERS;
     return await axios.get(url);
   } catch (err) {
     throw new Error(err.message);
   }
 };
 
-export const getArtistListData = async () => {
+export const getFilterData = async (params) => {
+  const config = {
+    params,
+  };
   try {
-    const url = API_GET_ARTIST_LIST;
-    return await axios.get(url);
-  } catch (err) {
-    throw new Error(err.message);
-  }
-};
-
-export const getSearchTrack = async (params) => {
-  try {
-    return await axios.get(getSearchTrackApi(params));
-  } catch (err) {
-    throw new Error(err.message);
-  }
-};
-
-export const getSearchArtist = async (params) => {
-  try {
-    return await axios.get(getSearchArtistApi(params));
+    return await axios.get(API_GET_USERS, config);
   } catch (err) {
     throw new Error(err.message);
   }

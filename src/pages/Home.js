@@ -1,76 +1,141 @@
-import React, { useEffect, useState } from 'react';
+import MaterialReactTable from 'material-react-table';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Container, Grid, Typography } from '@material-ui/core';
-import TabsContent from '../components/TabsContent';
 import Search from '../components/Search';
-
 import {
-  getArtistListProcess,
-  getSearchArtistListProcess,
-  getSearchTrackListProcess,
-  getTrackListProcess,
+  getFilterProcess,
+  getFilterResult,
+  getUserListProcess,
 } from '../redux/Home/actions';
 import {
-  makeSelectArtistList,
-  makeSelectSearchArtistList,
-  makeSelectSearchTrackList,
-  makeSelectTrackList,
+  makeSelectFilterList,
+  makeSelectUserList,
 } from '../redux/Home/selectors';
 
-const Home = () => {
+export const Home = () => {
   const dispatch = useDispatch();
-  const dataTrackList = useSelector(makeSelectTrackList());
-  const dataArtistList = useSelector(makeSelectArtistList());
-  const dataSearchTrackList = useSelector(makeSelectSearchTrackList());
-  const dataSearchArtistList = useSelector(makeSelectSearchArtistList());
 
-  //initial state
-  const [value, setValue] = useState('');
-  const [tabActive, setTabActive] = useState(0);
-  const [isSearch, setIsSearch] = useState(false);
+  const [genderSelect, setGenderSelect] = useState('all');
+  const [listDataUsers, setListDataUsers] = useState([]);
+  const [searchKey, setSearchKey] = useState('');
+
+  const dataUsers = useSelector(makeSelectUserList());
+  const dataFilters = useSelector(makeSelectFilterList());
+
+  let cloneListDataUsers = JSON.parse(JSON.stringify(listDataUsers));
 
   useEffect(() => {
-    dispatch(getTrackListProcess());
-    dispatch(getArtistListProcess());
+    dispatch(getUserListProcess());
+    //do something when the row selection changes
   }, []);
 
+  useEffect(() => {
+    if (dataFilters.length > 0) {
+      setListDataUsers(dataFilters);
+    } else {
+      setListDataUsers(dataUsers);
+    }
+  }, [dataFilters, dataUsers, genderSelect]);
+
+  const columns = useMemo(
+    () => [
+      {
+        accessorKey: 'username',
+        id: 'username',
+        header: 'Username',
+      },
+      {
+        accessorKey: 'name',
+        id: 'name',
+        header: 'Name',
+      },
+      {
+        accessorKey: 'email',
+        id: 'email',
+        header: 'Email',
+      },
+      {
+        accessorKey: 'gender',
+        id: 'gender',
+        header: 'Gender',
+      },
+      {
+        accessorKey: 'registrationDate',
+        id: 'registrationDate',
+        header: 'Registration Date',
+      },
+    ],
+    [],
+  );
+
+  //simple data example
+  const data = useMemo(() => cloneListDataUsers, [cloneListDataUsers]);
+
+  const getFilteredData = (params) => {
+    dispatch(getFilterProcess(params));
+  };
+
+  const handleOnResetFilter = () => {
+    setGenderSelect('all');
+    setSearchKey('');
+    dispatch(getFilterResult([]));
+  };
+
+  const changeGenderSelected = (e) => {
+    setGenderSelect(e.target.value);
+
+    let params = {};
+
+    params.gender = e.target.value;
+
+    if (searchKey) {
+      params.keyword = searchKey;
+    }
+
+    getFilteredData(params);
+  };
+
   const handleOnChangeSearch = (val) => {
-    setValue(val);
+    setSearchKey(val);
   };
 
   const handleOnSearch = () => {
-    setIsSearch(true);
-    dispatch(getSearchTrackListProcess(value));
-    dispatch(getSearchArtistListProcess(value));
-  };
+    let params = {};
 
-  const handleOnCancelSearch = () => {
-    setIsSearch(false);
-  };
+    params.keyword = searchKey;
 
-  //handle tab active
-  const handleOnActiveTab = (e, newValue) => {
-    setValue('');
-    setIsSearch(false);
-    setTabActive(newValue);
+    if (genderSelect !== 'all') {
+      params.gender = genderSelect;
+    }
+
+    getFilteredData(params);
   };
 
   return (
-    <Container maxWidth="sm">
+    <>
       <Search
-        value={value}
+        value={searchKey}
+        genderSelect={genderSelect}
+        handleSelectChange={changeGenderSelected}
+        handleResetFilter={handleOnResetFilter}
         onChange={handleOnChangeSearch}
         onRequestSearch={handleOnSearch}
-        onCancelSearch={handleOnCancelSearch}
       />
-      <TabsContent
-        activeTab={tabActive}
-        dataTopTrack={isSearch ? dataSearchTrackList : dataTrackList}
-        dataTopArtist={isSearch ? dataSearchArtistList : dataArtistList}
-        onChange={handleOnActiveTab}
+      <MaterialReactTable
+        columns={columns}
+        data={data}
+        options={{
+          filtering: true,
+        }}
+        enableDensityToggle={false}
+        enableExpandAll={false}
+        enableFullScreenToggle={false}
+        enableFilters={false}
+        enableHiding={false}
+        paginateExpandedRows={false}
+        enableToolbarTop={false}
+        enableMultiRowSelection={false}
       />
-    </Container>
+    </>
   );
 };
-
-export default Home;
